@@ -37,21 +37,22 @@ tone(BUZZ,A*2,125);
     delay(260);
 }
 void deactivated(){
-  tone(BUZZ,E*4,250);
-    delay(260);
-    tone(BUZZ,E*4,125);
-    delay(150);
-    tone(BUZZ,E*4,250);
-    delay(260);
-    tone(BUZZ,E*4,250);
-    delay(260);
-    tone(BUZZ,E*4,250);
-    delay(260);
+
+  tone(7,D*4,150);
+  delay(180);
+  tone(7,E*4,150);
+   delay(180);
+  tone(7,G*4,150);
+   delay(180);
   
-    tone(BUZZ,D*4,250);
-    delay(260);
-    tone(BUZZ,D*4,250);
-    delay(260);
+  tone(7,E*4,400);
+   delay(400);
+  tone(7,B*4,400);
+  delay(500);
+  tone(7,B*4,400);
+  delay(500);
+  tone(7,A*4,600);
+  delay(600);
 }
 int a=-1;//-1 is deactivated,1 is activated
 void alarm(){
@@ -59,13 +60,14 @@ void alarm(){
   if(a==1){
     if(reading==HIGH){
        tone(BUZZ,B*4,1000);
+        bluetooth.write("\nMotion Detected!!\n");
        delay(1000);
     }
   }
 
 }
 
-int door=1;
+int door=1;//door is on open state
 void loop(){
 if(bluetooth.available()){
   int s=bluetooth.read();
@@ -79,14 +81,19 @@ if(bluetooth.available()){
         deactivated();
         
       } 
-    }else if(s==(char)'B'){
+    }
+   if(s==(char)'B'){
     door=(-door);
     if(door==1){
       ser.write(180-160);
        bluetooth.write("\nDoor Opened!!!\n");
+      deactivated();
+       a=-1;
     }else {
       ser.write(180-84);
       bluetooth.write("\nDoor Closed!!!\n");
+       activated();
+       a=1;
     }
   }
   }
