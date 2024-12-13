@@ -85,12 +85,12 @@ if(bluetooth.available()){
    if(s==(char)'B'){
     door=(-door);
     if(door==1){
-      ser.write(180-160);
+      ser.write(180-84);
        bluetooth.write("\nDoor Opened!!!\n");
       deactivated();
        a=-1;
     }else {
-      ser.write(180-84);
+      ser.write(180-160);
       bluetooth.write("\nDoor Closed!!!\n");
        activated();
        a=1;
